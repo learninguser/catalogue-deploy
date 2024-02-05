@@ -15,50 +15,16 @@ pipeline {
         ansiColor('xterm')
     }
     parameters {
-        choice(name: 'action', choices: ['apply', 'destroy'], description: 'Pick something')
+        string(name: 'version', defaultValue: '1.0.0', description: "Artifact Version")
+        string(name: 'environment', defaultValue: 'dev', description: "Environment")
     }
     // Build stage
     stages {
-        stage('Get the version'){
-            steps {
-                script {
-                    def packageJSON = readJSON file: "package.json"
-                    packageVersion = packageJSON.version
-                    echo "Application verison: ${packageVersion}"
-                }
-            }
-        }
-        stage('Install dependencies') {
+        stage('Deploy'){
             steps {
                 sh """
-                    npm install
+                    echo "version: ${params.version}"
                 """
-            }
-        }
-        stage('Build'){
-            steps {
-                sh """
-                    zip -q -r ${component}.zip ./* -x ".git" -x "*.zip" -x "Jenkinsfile"
-                """
-            }
-        }
-        stage('Publish artifact to Nexus'){
-            steps {
-                nexusArtifactUploader(
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    nexusUrl: "${nexusURL}",
-                    groupId: "com.${projectName}",
-                    version: "${packageVersion}",
-                    repository: "${component}",
-                    credentialsId: 'nexus-auth',
-                    artifacts: [
-                        [artifactId: "${projectName}",
-                        classifier: '',
-                        file: "${component}.zip",
-                        type: 'zip']
-                    ]
-                )
             }
         }
     }
