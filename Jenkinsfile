@@ -53,18 +53,18 @@ pipeline {
         }
     }
     // post build
-    post {
-        always {
-            // deleteDir()
-        }
-        success {
-            echo "Runs only if pipeline is succeded"
-        }
-        failure {
-            echo "Runs only if pipeline is failed"
-        }
-        changed {
-            echo "Runs only if there is change in state compared to previous"
-        }
-    }
+    // post {
+    //     always {
+    //         deleteDir()
+    //     }
+    //     success {
+    //         echo "Runs only if pipeline is succeded"
+    //     }
+    //     failure {
+    //         echo "Runs only if pipeline is failed"
+    //     }
+    //     changed {
+    //         echo "Runs only if there is change in state compared to previous"
+    //     }
+    // }
 }
