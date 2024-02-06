@@ -43,11 +43,11 @@ pipeline {
             }
             input {
                 message "Should we continue?"
-                ok "yes"
+                ok "Yes, we should."
             }
             steps {
                 sh """
-                    terraform apply -var-file=${params.environment}/${params.environment}.tfvars -var="app_version=${params.version} -auto-approve"
+                    terraform apply -var-file=${params.environment}/${params.environment}.tfvars -var="app_version=${params.version}" -auto-approve
                 """
             }
         }
