@@ -43,7 +43,7 @@ pipeline {
             }
             input {
                 message "Should we continue?"
-                ok "Yes, we should."
+                ok "yes"
             }
             steps {
                 sh """
