@@ -20,11 +20,10 @@ pipeline {
     }
     // Build stage
     stages {
-        stage('Deploy'){
+        stage('Init'){
             steps {
                 sh """
-                    echo "version: ${params.version}"
-                    echo "environment: ${params.environment}"
+                    terraform init --backend-config=${params.environment}/backend.tf -reconfigure -upgrade
                 """
             }
         }
