@@ -55,7 +55,7 @@ pipeline {
     // post build
     post {
         always {
-            deleteDir()
+            // deleteDir()
         }
         success {
             echo "Runs only if pipeline is succeded"
