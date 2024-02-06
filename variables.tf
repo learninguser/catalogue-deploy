@@ -23,3 +23,7 @@ variable "environment" {
 variable "zone_name" {
   default = "learninguser.shop"
 }
+
+variable "app_version" {
+  
+}
