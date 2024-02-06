@@ -17,6 +17,7 @@ pipeline {
     parameters {
         string(name: 'version', defaultValue: '', description: "Artifact Version")
         string(name: 'environment', defaultValue: '', description: "Environment")
+        choice(name: 'action', choices: ['apply', 'destroy'], description: "Create or destroy resource")
     }
     // Build stage
     stages {
@@ -31,6 +32,22 @@ pipeline {
             steps {
                 sh """
                     terraform plan -var-file=${params.environment}/${params.environment}.tfvars -var="app_version=${params.version}"
+                """
+            }
+        }
+        stage('Apply changes'){
+            when {
+                expression { 
+                    params.action == 'apply'
+                }
+            }
+            input {
+                message "Should we continue?"
+                ok "Yes, we should."
+            }
+            steps {
+                sh """
+                    terraform apply -var-file=${params.environment}/${params.environment}.tfvars -var="app_version=${params.version} -auto-approve"
                 """
             }
         }
