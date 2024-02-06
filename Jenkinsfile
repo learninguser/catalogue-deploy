@@ -15,8 +15,8 @@ pipeline {
         ansiColor('xterm')
     }
     parameters {
-        string(name: 'version', defaultValue: '1.0.0', description: "Artifact Version")
-        string(name: 'environment', defaultValue: 'dev', description: "Environment")
+        string(name: 'version', defaultValue: '', description: "Artifact Version")
+        string(name: 'environment', defaultValue: '', description: "Environment")
     }
     // Build stage
     stages {
@@ -24,6 +24,7 @@ pipeline {
             steps {
                 sh """
                     echo "version: ${params.version}"
+                    echo "environment: ${params.environment}"
                 """
             }
         }
